@@ -1,23 +1,25 @@
-## Multirun scripts
+## Multi-run scripts
 
-* Auto-generate multiple Delft3D-FLOW files  for multiple subsequent (restarting) simulations
+Auto-generate multiple sequential Delft3D-FLOW models for multiple subsequent (restarting) simulations from a template model
 
-  * Master Defenition File (.mdf)
+multipleruns.py adjusts the following things in the input files
 
-    * Adds `Restid='identifier'+ run_nr`, get's the identifier from the .mdf filename
-    * Change smoothing time to zero `Tlfsmo = 0.0000000e+000`
-    * Change times of restart and history files:
+* Master Defenition File (.mdf)
 
-    `Flmap = T_start output_time_step(remains the same) T_end`
+  * Adds `Restid='identifier'+ run_nr`, get's the identifier from the .mdf filename
+  * Change smoothing time to zero `Tlfsmo = 0.0000000e+000`
+  * Change times of restart and history files:
 
-    `Flhis = T_start output_time_step(remains the same) T_end`
+  `Flmap = T_start output_time_step(remains the same) T_end`
 
-    * Due to a bug in Delft3D-FLOW, NetCDF cannot restart a map file from a specific time. Therefore, the index of the output step must be used. This is restart time step is calculated automatically and added with `Restid_timeindex` keyword and value. This is the only way to restart from a netCDF map file!
+  `Flhis = T_start output_time_step(remains the same) T_end`
 
-  * Morphology .mor file
+  * Due to a bug in Delft3D-FLOW, NetCDF cannot restart a map file from a specific time. Therefore, the index of the output step must be used. This is restart time step is calculated automatically and added with `Restid_timeindex` keyword and value. This is the only way to restart from a netCDF map file!
 
-    * Resets morphological smoothing time `MorStt  = 0`
+* Morphology .mor file
 
-  * .bcc, .bct, .sed files
+  * Resets morphological smoothing time `MorStt  = 0`
 
-    * Adds duration of one simulation to all time steps
+* .bcc, .bct, .sed files
+
+  * Adds duration of one simulation to all time steps

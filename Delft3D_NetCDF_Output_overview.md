@@ -1,5 +1,7 @@
 # Delft3D NetCDF output keywords
 
+NetCDF output in Delft3D-FLOW can be toggled by setting the `FlNcdf = #maphis#` in the .mdf file.
+
 ## Vector components
 | Keywords set | Description | Dimensions U/ $\xi$ | Dimensions V/ $\eta$ |
 |--------------|-------------|--------------|-------------|
@@ -25,11 +27,20 @@
 | LYRFRAC      | Volume fraction of sediment in underlayer | (time, LSEDTOT, nlyr, M, N) |
 | DP_BEDLYR    | Vertical position of sediment layer interface | (time, nlyrp1, M, N) |
 
-# Descriptors/grid/coordinates
+## Constants
+
+| Keyword | Description | Dimensions|
+|-----------|-------------|---------|
+| GRAVITY         | Gravitational acceleration constant $\left(\frac{m}{s^2}\right)$ |-|
+| RHOCONST | User specified constant density $\left(\frac{kg}{m^3}\right)$ | -|
+
+
+## Attributes, grid and coordinates
 | Keyword | Description | Dimensions|
 |-----------|-------------|---------|
 | grid| Attributes describing [SGRID](https://sgrid.github.io/sgrid/) ||
-| DPS       | Bottom depth (sigma point) | (time, M, N) |
+| DPS       | Bottom depth at time (sigma point) | (time, M, N) |
+| DP0  | Initial bottom depth (positive down) | (MC, NC) |
 | NAMCON          | Name of constituent quantity (eg sediments, solvents, tracers) | (LSTSCI) |
 | NAMTUR          | Name of turbulent quantities (eg Turbulent energy, Energy dissipation) | (LTUR) |
 | SIG_LYR         | Sigma-coordinates of layer centres | -|
@@ -39,9 +50,7 @@
 | LSED | Also array with indices of Sediments, no idea what the difference between this and LSEDTOT is  ¯\_(ツ)_/¯ | - |
 | KMAXOUT         | User selected output layer interfaces|-|
 | KMAXOUT_RESTR   | User selected output layer centres|-|
-| GRAVITY         | Gravitational acceleration constant $\left(\frac{m}{s^2}\right)$ |-|
-| RHOCONST | User specified constant density $\left(\frac{kg}{m^3}\right)$ | -|
-| time| List of datetimes of outputsteps following [CF conventions](http://cfconventions.org/cf-conventions/cf-conventions.html) |(time)|
+| time| List of datetimes of output time-steps following [CF conventions](http://cfconventions.org/cf-conventions/cf-conventions.html) |(time)|
 | XZ | X Meshgrid of face coordinates |-|
 | YZ | Y Meshgrid of face coordinates |-|
 | XCOR | X-coordinate of grid points (ie the  grid nodes) |-|
@@ -52,7 +61,6 @@
 | NC| node dimensions |-|
 | nlyr | Number of underlayer |-|
 | nlyrp1 | Interfaces of underlayers |-|
-| DP0  | Initial bottom depth (positive down) | (MC, NC) |
 
 
 ## Various
@@ -62,7 +70,7 @@
 | RHO   | Density per layer in sigma point | (time, KMAXOUT_RESTR, M, N) |
 | R1  | Concentrations per layer in sigma point | (time, LSTSCI, KMAXOUT_RESTR, M, N) |
 | WPHY  | W-velocity per layer in sigma point : sediment fall velocity? (m/s) | (time, KMAXOUT_RESTR, M, N) |
-| W   | W-omega per layer in sigma point : wave angle? | (time, KMAXOUT, M, N) |
+| W   | W-omega per layer in sigma point : wave angle? [ω is the vertical velocity relative to the σ-plane] | (time, KMAXOUT, M, N) |
 | WS  | Settling velocity per sigma-layer | (time, LSED, KMAXOUT, M, N) |
 |S1        | Water-level in sigma point|(time, M, N)|
 |DPS0          | Initial bottom depth at sigma points (positive down) ||
@@ -82,9 +90,9 @@
 
 These can be toggled in the morphology file under output with
 
-`   StatWaterDepth   = MIN MAX MEAN STD             
-   StatVelocity     = MIN MAX MEAN STD             
-   StatBedLoad      = MIN MAX MEAN STD             
+`StatWaterDepth   = MIN MAX MEAN STD
+   StatVelocity     = MIN MAX MEAN STD
+   StatBedLoad      = MIN MAX MEAN STD
    StatSuspload     = MIN MAX MEAN STD`
 
 | Keyword | Description |
@@ -115,13 +123,16 @@ These can be toggled in the morphology file under output with
 | KCU | Mask array for U-velocity points |
 | KCV | Mask array for V-velocity points |
 
-
 ## Turbulence modelling
+Vorticity and enstrophy can be toggled `Vortic = #Y#` in the .mdf file
+
 | Keyword | Description | Dimensions|
-|-----------|-------------|---------|
-|RTUR1     | Turbulent quantity per layer in sigma point (1. Turbulent Kinetic Energy $k$ and 2. Turbulent energy dissipation $\epsilon$) |(time, LTUR, KMAXOUT, M, N)|
-|VICWW     | Vertical eddy viscosity-3D in sigma point|(time, KMAXOUT, M, N)|
-|DICWW     | Vertical eddy diffusivity-3D in sigma point|(time, KMAXOUT, M, N)|
-|RICH      | Richardson number|(time, KMAXOUT, M, N)|
-|VICUV     | horizontal eddy viscosity in zeta point |(time, KMAXOUT_RESTR, M, N)|
-|RCA       | Near-bed reference concentration of sediment|(time, LSED, M, N)|
+|--------|-------------|---------|
+| RTUR1  | Turbulent quantity per layer in sigma point (1. Turbulent Kinetic Energy $k$ and 2. Turbulent energy dissipation $\epsilon$) |(time, LTUR, KMAXOUT, M, N)|
+| VICWW  | Vertical eddy viscosity-3D in sigma point|(time, KMAXOUT, M, N)|
+| DICWW  | Vertical eddy diffusivity-3D in sigma point|(time, KMAXOUT, M, N)|
+| RICH   | Richardson number|(time, KMAXOUT, M, N)|
+| VICUV  | horizontal eddy viscosity in zeta point |(time, KMAXOUT_RESTR, M, N)|
+| RCA    | Near-bed reference concentration of sediment|(time, LSED, M, N)|
+| VORTIC | Vorticity at each layer in depth point $\frac{1}{s}$ | (time, KMAXOUT_RESTR, MC, NC) |
+| ENSTRO | Enstrophy at each layer in depth point $\frac{1}{s}$ | (time, KMAXOUT_RESTR, MC, NC) |

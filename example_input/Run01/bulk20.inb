@@ -1,0 +1,7 @@
+[BedcompositionFileInformation]
+FileVersion      = 01.00
+[Layer]
+Type             = volume fraction
+Thick            = 20                           [m] thickness of sediment layer in case of either ‘mass fraction’ or ‘volume fraction’ type layer
+Fraction1        = 0.5
+Fraction2        = 0.5
