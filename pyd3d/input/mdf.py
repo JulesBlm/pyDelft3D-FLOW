@@ -124,8 +124,6 @@ class Mdf(object):
         """
 
         keywords = OrderedDict()
-        
-        print("Readding", self.filename)
 
         with open(self.filename, "r") as mdf_file:
             for line in mdf_file.readlines():

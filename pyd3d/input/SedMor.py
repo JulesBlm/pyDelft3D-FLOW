@@ -101,10 +101,10 @@ class Mor(object):
                 for keyword in data[header_name]:
                     if not (keyword in exclude):
                         new_file.write(f"   {keyword.ljust(16)} = {data[header_name][keyword]}\n")        
-          
+
 class Sed(object):
     def __init__(self, filename=None):
-        self.sediment_names = []
+        self.names = []
         self.filename = filename
         self.data = OrderedDict() 
         self.read(filename)        
@@ -132,7 +132,7 @@ class Sed(object):
                     
                     # to prevent overwriting the previous sediment
                     if header_name == 'Sediment':
-                        sed_nr = len(self.sediment_names)
+                        sed_nr = len(self.names)
                         header_name = header_name + str(sed_nr)
                         data[header_name] = OrderedDict()
 
@@ -145,7 +145,7 @@ class Sed(object):
                     list_of_values = re.split(r'\s{2,}', values.strip()) # split on more than two spaces
                     
                     if keyword == "Name":
-                        self.sediment_names.append(list_of_values[0][1:-1]) # add sediment to list of sediment names
+                        self.names.append(list_of_values[0][1:-1]) # add sediment to list of sediment names
 
                     data[header_name][keyword] = list_of_values[0]
 
@@ -197,8 +197,8 @@ class Sed(object):
                         new_file.write(f"   {keyword.ljust(16)} = {data[header_name][keyword]}\n")        
 
                     
-# TODO: Add description too
-# if filename.endswith(".mor"):
+# TODO: 
+# Make this a hardcoded dict to match values against
 #     mor_string_keywords = ['FileCreatedBy', 'FileCreationDate', 'FileVersion', 'MorUpd', 'IHidExp', 'ISlope', 'BcFil', 'IBedCond', 'ICmpCond', 'IUnderLyr', 'TTLForm', 'ThTrLyr', 'UpdBaseLyr', 'IniComp']
 #     mor_bool_keywords = ['NeuBcSand', 'NeuBcMud', 'DensIn', 'MorUpd', 'BedUpd', 'CmpUpd', 'NeglectEntrainment', 'EqmBc', 'UpdInf', 'Multi', 'UpwindBedload'] 
 #     mor_bool_output_keywords = ['VelocAtZeta', 'VelocMagAtZeta', 'VelocZAtZeta', 'ShearVeloc','MaximumWaterdepth','BedTranspAtFlux',
