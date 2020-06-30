@@ -6,7 +6,7 @@ TODO:
 
 import os, fileinput, shutil, copy #, pprint
 from numpy import format_float_scientific
-import pyd3d.mdf as mdf
+import pyd3d.input.mdf as mdf
 from pyd3d.utils import formatSci
 
 
@@ -39,8 +39,7 @@ def stupidReplaceTimeBC(template_filename, new_filename, run, init_end_time):
         new_bc_file.writelines(lines)
 
 # split into more functions
-def makeMultipleRuns(template_folder=None, number_of_runs=2, restId_base=None, init_MorStt="9.0000000e+000",
-                    new_Tlfsmo=0, remove_netcdf=False, Restid_timeindex=None):
+def makeMultipleRuns(template_folder=None, number_of_runs=2, **kwargs):
     """Takes a 'template_folder' and writes 'number_of_runs' new folders with times and some other parameters adjusted for subsequent restarts.
     RunTXT keyword is kind of mangled in subsequent MDF files because the mdf script joins alls runtxt strings
 
@@ -84,6 +83,12 @@ def makeMultipleRuns(template_folder=None, number_of_runs=2, restId_base=None, i
         raise Exception('No read folder supplied, aborting')
     elif not os.path.exists(template_folder):
         raise Exception('Looks like read folder does not exist, aborting')
+    
+    restId_base = kwargs.get('restId_base', None)
+    init_MorStt = kwargs.get(init_MorStt, "9.0000000e+000")
+    new_Tlfsmo = kwargs.get(new_Tlfsmo, 0)
+    remove_netcdf = kwargs.get(remove_netcdf, False)
+    Restid_timeindex = kwargs.get(Restid_timeindex, None)
     
     base_folder = os.path.dirname(template_folder)
 

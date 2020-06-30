@@ -2,22 +2,25 @@
 
 pyDelft3D-FLOW is a small Python package that were developed to help with 1) reading and writing of several input files of a [Delft3D4-FLOW model](https://oss.deltares.nl/documents/183920/185723/Delft3D-FLOW_User_Manual.pdf), 2) auto-generating multiple successive runs, 3) (interactive) plotting of the Delft3D-FLOW output (NetCDF format only) as and 4) overwriting values in NetCDF output. 
 
-I will attempt to make [everything I developed for my thesis](https://github.com/JulesBlm/Delft3D-Python-Thesis) to a clean and reusable package here. Check out the notebook to get up-and-running.
+These were developed to view the output of modelling turbidity currents in Delft3D(4)-FLOW, which means 3D models that are entirely submerged. I will attempt to make [everything I developed for my thesis](https://github.com/JulesBlm/Delft3D-Python-Thesis) to a clean and reusable package here. Check out the Jupyter notebooks to get up-and-running. If there's sufficient interest, I'll document and expand it a bit more.
 
 ## Installation
 
-Install pyDelft3D-FLOW with [Poetry](https://python-poetry.org/docs/) (preferred) or Conda.
+Clone this repository: `git clone https://github.com/JulesBlm/pyDelft3D-FLOW.git`
 
-### Python Poetry
+Install pyDelft3D-FLOW with [Poetry](https://python-poetry.org/docs/) (preferred), Conda or pip.
+
+#### Python Poetry
 
 [Why poetry?](https://hackersandslackers.com/python-poetry-package-manager/)
 
 Run `poetry install`.
 
-
-### Conda
+#### Conda
 
 Make a Python environment with [Anaconda](https://www.anaconda.com/products/individual), [Miniconda](https://docs.conda.io/en/latest/miniconda.html), [Poetry](https://python-poetry.org/) or whatever you like.
+
+### Post-installation
 
 There are three commands to run after installation to get the widgets and plot figures to play nicely with JupyterLab
 
@@ -80,22 +83,22 @@ Optionally, install [ITKwidgets](https://docs.pyvista.org/plotting/itk_plotting.
 * [https://svn.oss.deltares.nl/repos/openearthtools/trunk/python/OpenEarthTools/openearthtools/io/delft3d/](Deltares Python OpenEarthTools)
 
 
-# To-do
+# To Do
 
 I'd like to get to these
 
 * Move colorcet and imageio-ffmpeg to extras
-* Black
+* Code formatting with [Black](https://black.readthedocs.io/en/stable/)
 * Proper package with correct imports and all that
-* [Sphinx docs](https://docs.readthedocs.io/en/stable/intro/getting-started-with-sphinx.html) with [RST](https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html)
+* Documentation with [Sphinx](https://docs.readthedocs.io/en/stable/intro/getting-started-with-sphinx.html) with [RST](https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html)
 
 
 # Ideas
 
-I have plenty of ideas for improvement that I most likely won't get to.
+I have plenty of ideas for improvement that I most likely won't get to, here's some
 
 ## Input
-* Automatically read parameters into right types (float, int). For example in Sed.py and Mor.py, everthing is read as a string.
+* Automatically read parameters into right types (float, int). For example in Sed.py and Mor.py, now everthing is read as a string
 * Tighter integration with xarray
 * Match read file contents against dict of description so you know what the keywords are for.
     * Check if selected options are valid
