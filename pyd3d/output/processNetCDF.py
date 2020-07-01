@@ -3,24 +3,24 @@ import numpy as np
 from os import path
 from .processing_2d import vector_sum
 
-# UNFINISHED!
-def renameConstituents(dataset):
-    # attempt to rename constituents dict of indexes to sediment names for more intuitive selection
-    # but doesnt work yet. Also for turbulent quantities!
-    sediments = [sed.decode('UTF-8').strip() for sed in dataset.NAMCON.values]
-    turb_quants = [tur.decode('UTF-8').strip() for tur in dataset.NAMTUR.values]
+# UNFINISHED! move to dev branch
+# def renameConstituents(dataset):
+#     # attempt to rename constituents dict of indexes to sediment names for more intuitive selection
+#     # but doesnt work yet. Also for turbulent quantities!
+#     sediments = [sed.decode('UTF-8').strip() for sed in dataset.NAMCON.values]
+#     turb_quants = [tur.decode('UTF-8').strip() for tur in dataset.NAMTUR.values]
 
-    # just for loop on size of seds
-    # seds = {
-    #     0: sediments[0],
-    #     1: sediments[1]
-    # }
+#     # just for loop on size of seds
+#     # seds = {
+#     #     0: sediments[0],
+#     #     1: sediments[1]
+#     # }
     
-    dataset['LSTSCI'] = sediments
-    renamed = dataset.rename_dims({'LSTSCI': 'sed'})
-    renamed.sed
+#     dataset['LSTSCI'] = sediments
+#     renamed = dataset.rename_dims({'LSTSCI': 'sed'})
+#     renamed.sed
     
-    return dataset
+#     return dataset
 
 def addDepth(dataset):
     '''

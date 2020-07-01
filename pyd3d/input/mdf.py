@@ -39,7 +39,7 @@ class Mdf(object):
     
     TODO
     ----
-    * separate file writing and format conversion
+    * Separate file writing and format conversion
     """
     def __init__(self, filename):
         self.filename = filename

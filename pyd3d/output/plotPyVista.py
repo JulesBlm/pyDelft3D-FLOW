@@ -10,25 +10,56 @@ import numpy as np
 from .processNetCDF import addDepth
 from .fixgrid import fixCORs, fixMeshGrid
 
-def makeBottomSurface(dataset, timestep=-1, mystery_flag=False):
+def makeBottomSurface(dataset, timestep=-1, mystery_flag=False, ignore_zero=True):
     '''
-    Default is last timestep
-    '''
-    dataset = fixCORs(dataset)
-    if 'depth_center' not in dataset:
-        print("NetCDF is not preprocessed")
-        dataset = fixMeshGrid(dataset, mystery_flag=mystery_flag)    
+    Make a StructuredGrid of the bathymetry
+    Default timestep is last timestep
     
-    plot_x_mesh = dataset.XCOR.values[1:-1,1:-1]
-    plot_y_mesh = dataset.YCOR.values[1:-1,1:-1]
-    plot_z_mesh = -dataset.DPS.isel(time=-1).values[1:-1,1:-1]
+    Parameters
+    ----------
+    dataset : xarray.core.dataset.Dataset
+        xarray DataSet of Delft3D-FLOW output
+    
+    timestep : int
+        Output timestep to select
+        
+    ignore_zero : bool, optional
+        Exclude cells that have 0 depth/height 
+
+    mystery_flag : bool, optional
+        Who knows? It's a mystery flag!
+        
+    Returns
+    -------
+    pyvista.core.pointset.StructuredGrid
+        StructuredGrid of model bathymetry at timestep
+
+        
+    Examples
+    --------
+    >> bottom_surface_grid = makeBottomSurface(trim, ignore_zero=True)
+    
+    '''
+    dataset = fixCORs(dataset) # cell COR's or centers?
+
+    depth = dataset.DPS.isel(time=timestep)
+    
+    if ignore_zero:
+        depth = depth.where(depth != 0).values # filter 0 values from depth
+        plot_x_mesh = dataset.XCOR.where(depth != 0).values[1:-1,1:-1]
+        plot_y_mesh = dataset.YCOR.where(depth != 0).values[1:-1,1:-1]
+    else:
+        plot_x_mesh = dataset.XCOR.values[1:-1,1:-1]
+        plot_y_mesh = dataset.YCOR.values[1:-1,1:-1]     
+        depth = depth.values
+    
+    plot_z_mesh = -depth[1:-1,1:-1]
     
     bottom_surface = pv.StructuredGrid(plot_x_mesh, plot_y_mesh, plot_z_mesh)
     bottom_surface["Depth"] = plot_z_mesh.ravel(order="F")
     
     return bottom_surface
-    
-    
+
 # at faces or at nodes?
 def makeStructuredGridDepth(dataset, keyword='SIG_LYR'):
     if keyword is not 'SIG_LYR' and keyword is not 'SIG_INTF':
