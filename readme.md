@@ -1,6 +1,6 @@
 # pyDelft3D-FLOW
 
-pyDelft3D-FLOW is a small Python package that were developed to help with 1) reading and writing of several input files of a [Delft3D4-FLOW model](https://oss.deltares.nl/documents/183920/185723/Delft3D-FLOW_User_Manual.pdf), 2) auto-generating multiple successive runs, 3) (interactive) plotting of the Delft3D-FLOW output (NetCDF format only) as and 4) overwriting values in NetCDF output. 
+pyDelft3D-FLOW is a small Python package that were developed to help with 1) reading and writing of several input files of a [Delft3D4-FLOW model](https://content.oss.deltares.nl/delft3d/manuals/Delft3D-FLOW_User_Manual.pdf), 2) auto-generating multiple successive runs, 3) (interactive) plotting of the Delft3D-FLOW output (NetCDF format only) as and 4) overwriting values in NetCDF output. 
 
 These were developed to view the output of modelling turbidity currents in Delft3D(4)-FLOW, which means 3D models that are entirely submerged. I will attempt to make [everything I developed for my thesis](https://github.com/JulesBlm/Delft3D-Python-Thesis) to a clean and reusable package here. Check out the Jupyter notebooks to get up-and-running. If there's sufficient interest, I'll document and expand it a bit more.
 
